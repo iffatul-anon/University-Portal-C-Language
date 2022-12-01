@@ -23,7 +23,7 @@ struct password{
 
 struct student_waiver{
     int id;
-    float waiver;
+    float given_waiver;
     float required_sgpa;
 } waiver;
 
@@ -42,6 +42,11 @@ struct mark_entry{
     float lab_report;
     float proposal;
 } mark;
+
+struct student_result{
+    int id;
+    float sgpa;
+} result;
 
 float grade(float total){
     float grade_point;
@@ -246,8 +251,42 @@ void faculty_mark_entry_project(){
     return;
 }
 
-void faculty_result_list(char subject[100]){
-    
+void faculty_result_list(char tlp,char subject[100]){
+    FILE *openfile;
+
+    char file_name[100];
+    strcpy(file_name,subject);
+    strcat(file_name,".txt");
+
+    printf("%s\n\n",subject);
+
+    openfile = fopen(file_name,"a");
+    openfile = fopen(file_name,"r");
+    if(tlp=='t'){
+        printf("ID:  Quiz1 | Quiz2 | Quiz3 | Quiz Average | Assignment | Presentation | Midterm | Final | Attendance | Total | Grade Point\n\n");
+        while(fread(&mark,sizeof(mark),1,openfile) == 1){
+            printf("%d:  %.2f | %.2f | %.2f | %.2f         | %.2f       | %.2f         | %.2f   | %.2f | %.2f       | %.2f | %.2f\n\n",
+            mark.id,mark.quiz1,mark.quiz2,mark.quiz3,mark.average_quiz,mark.assignment,mark.presentation,mark.midterm,mark.final,mark.attendance,mark.total,mark.grade_point);
+        }
+    }
+    else if(tlp=='l'){
+        printf("ID:  Lab Performance | Assignment | Lab Report | Final | Attendance | Total | Grade Point\n\n");
+        while(fread(&mark,sizeof(mark),1,openfile) == 1){
+            printf("%d:  %.2f           | %.2f        | %.2f      | %.2f | %.2f       | %.2f | %.2f\n\n",
+            mark.id,mark.lab_performance,mark.assignment,mark.lab_report,mark.final,mark.attendance,mark.total,mark.grade_point);
+    }
+    }
+    else if(tlp=='p'){
+        printf("ID:  Proposal | Presentation | Final | Attendance | Total | Grade Point\n\n");
+        while(fread(&mark,sizeof(mark),1,openfile) == 1){
+            printf("%d:  %.2f    | %.2f        | %.2f | %.2f       | %.2f | %.2f\n\n",
+            mark.id,mark.proposal,mark.presentation,mark.final,mark.attendance,mark.total,mark.grade_point);
+        }
+    }
+
+    fclose(openfile);
+
+    return;
 }
 
 void faculty_mark_entry(int id,char tlp,char subject[100]){
@@ -281,25 +320,6 @@ void faculty_mark_entry(int id,char tlp,char subject[100]){
     if(!found){
         openfile = fopen(file_name,"a+");
         mark.id=id;
-        fwrite(&mark, sizeof(mark), 1, openfile);
-    }
-    fclose(openfile);
-
-    found=0;
-    openfile = fopen("Student Result.txt","a");
-    openfile = fopen("Student Result.txt","r+");
-    while(fread(&mark, sizeof(mark),1,openfile) == 1){
-        if(id==mark.id && strcmp(mark.subject,subject)==0){
-            fseek(openfile,-sizeof(mark), SEEK_CUR);
-            fwrite(&mark,sizeof(mark), 1, openfile);
-            found = 1;
-            break;
-        }
-    }
-    if(!found){
-        openfile = fopen("Student Result.txt","a+");
-        mark.id=id;
-        strcpy(mark.subject,subject);
         fwrite(&mark, sizeof(mark), 1, openfile);
     }
     fclose(openfile);
@@ -341,7 +361,7 @@ void faculty_course_dasboard(char tlp,char subject[100]){
         }
         if(option==2){
             system("clear");
-            faculty_result_list(subject);
+            faculty_result_list(tlp,subject);
             continue;
         }
         if(option==3){
@@ -381,7 +401,7 @@ void faculty_course(int id){
     }
     if(id==1002){
         while(1){
-            printf("\n\n1. Software Devlopment Capston Project\n");
+            printf("\n\n1. Software Development Capstone Project\n");
             printf("2. Back\n");
             printf("\nSelect a option: ");
             int option;
@@ -389,7 +409,7 @@ void faculty_course(int id){
             if(option==1){
                 system("clear");
                 char tlp='p';
-                char subject[]="Software Devlopment Capston Project";
+                char subject[]="Software Development Capstone Project";
                 faculty_course_dasboard(tlp,subject);
                 continue;
             }
@@ -401,15 +421,124 @@ void faculty_course(int id){
 }
 
 void student_payment_ledger(int id){
+    FILE *openfile1, *openfile2;
 
+    float amount=90000;
+    float given_waiver;
+    float required_sgpa,sgpa;
+
+    printf("ID: %d\n\n",id);
+
+    openfile1 = fopen("Student Result.txt","a");
+    openfile1 = fopen("Student Result.txt","r");
+    while(fread(&result,sizeof(result),1,openfile1) == 1){
+        if(id==result.id){
+            sgpa=result.sgpa;
+            printf("SGPA: %.2f\n\n\n",sgpa);
+        }
+    }
+    fclose(openfile1);
+
+    openfile2 = fopen("Student Waiver.txt","a");
+    openfile2 = fopen("Student Waiver.txt","r");
+    while(fread(&waiver,sizeof(waiver),1,openfile2) == 1){
+        if(id==waiver.id){
+            given_waiver=waiver.given_waiver;
+            required_sgpa=waiver.required_sgpa;
+        }
+    }
+    fclose(openfile2);
+
+    printf("Registration & Tution Fee: %.2fTk\n\n",amount);
+    if(sgpa<required_sgpa){
+        printf("Waiver: 00Tk\n\n");
+        printf("Payable: %.2fTk\n\n",amount);
+    }
+    else{
+        given_waiver=amount*given_waiver;
+        amount=amount-given_waiver;
+        printf("Waiver: %.2fTk\n\n",given_waiver);
+        printf("Payable: %.2fTk\n\n",amount);
+    }
+
+    return;
 }
 
 void student_result(int id){
+    float sum_grade_point=0.0,sgpa;
 
+    FILE *openfile;
+
+    printf("ID: %d\n\n",id);
+
+    openfile = fopen("Data Structure.txt","a");
+    openfile = fopen("Data Structure.txt","r");
+    printf("Subject: Data Structure\n\n");
+    printf("Quiz1 | Quiz2 | Quiz3 | Quiz Average | Assignment | Presentation | Midterm | Final | Attendance | Total | Grade Point\n\n");
+    while(fread(&mark,sizeof(mark),1,openfile) == 1){
+        if(id==mark.id){
+            printf("%.2f | %.2f | %.2f | %.2f         | %.2f       | %.2f         | %.2f   | %.2f | %.2f       | %.2f | %.2f\n\n\n",
+            mark.quiz1,mark.quiz2,mark.quiz3,mark.average_quiz,mark.assignment,mark.presentation,mark.midterm,mark.final,mark.attendance,mark.total,mark.grade_point);
+            sum_grade_point=sum_grade_point+mark.grade_point;
+        }
+    }
+    fclose(openfile);
+
+    openfile = fopen("Data Structure Lab.txt","a");
+    openfile = fopen("Data Structure Lab.txt","r");
+    printf("Subject: Data Structure Lab\n\n");
+    printf("Lab Performance | Assignment | Lab Report | Final | Attendance | Total | Grade Point\n\n");
+    while(fread(&mark,sizeof(mark),1,openfile) == 1){
+        if(id==mark.id){
+            printf("%.2f           | %.2f        | %.2f      | %.2f | %.2f       | %.2f | %.2f\n\n\n",
+            mark.lab_performance,mark.assignment,mark.lab_report,mark.final,mark.attendance,mark.total,mark.grade_point);
+            sum_grade_point=sum_grade_point+mark.grade_point;
+        }
+    }
+    fclose(openfile);
+
+    openfile = fopen("Software Development Capstone Project.txt","a");
+    openfile = fopen("Software Development Capstone Project.txt","r");
+    printf("Subject: Software Development Capstone Project\n\n");
+    printf("Proposal | Presentation | Final | Attendance | Total | Grade Point\n\n");
+    while(fread(&mark,sizeof(mark),1,openfile) == 1){
+        if(id==mark.id){
+            printf("%.2f    | %.2f        | %.2f | %.2f       | %.2f | %.2f\n\n",
+            mark.proposal,mark.presentation,mark.final,mark.attendance,mark.total,mark.grade_point);
+            sum_grade_point=sum_grade_point+mark.grade_point;
+        }
+    }
+    fclose(openfile);
+
+    sgpa=sum_grade_point/3.0;
+    printf("SGPA: %.2f\n",sgpa);
+
+    int found=0;
+    openfile = fopen("Student Result.txt","a");
+    openfile = fopen("Student Result.txt","r+");
+    while(fread(&result, sizeof(result),1,openfile) == 1){
+        if(id==result.id){
+            result.sgpa=sgpa;
+            fseek(openfile,-sizeof(result), SEEK_CUR);
+            fwrite(&result,sizeof(result), 1, openfile);
+            found = 1;
+            break;
+        }
+    }
+    if(!found){
+        openfile = fopen("Student Result.txt","a+");
+        result.id=id;
+        result.sgpa=sgpa;
+        fwrite(&result, sizeof(result), 1, openfile);
+    }
+    fclose(openfile);
+
+    return;
 }
 
 void faculty_password_change(int id){
     FILE *openfile;
+    openfile = fopen("Faculty Password.txt","a");
     openfile = fopen("Faculty Password.txt","r+");
     while(fread(&pass, sizeof(pass),1,openfile) == 1){
         if(id==pass.id){
@@ -439,6 +568,7 @@ void faculty_password_change(int id){
 
 void student_password_change(int id){
     FILE *openfile;
+    openfile = fopen("Student Password.txt","a");
     openfile = fopen("Student Password.txt","r+");
     while(fread(&pass, sizeof(pass),1,openfile) == 1){
         if(id==pass.id){
@@ -737,6 +867,7 @@ void faculty_login(){
     scanf("%s",&password);
     int found = 0;
     FILE *openfile;
+    openfile = fopen("Faculty Password.txt","a");
     openfile = fopen("Faculty Password.txt","r");
     while(fread(&pass,sizeof(pass),1,openfile) == 1){
         if(id==pass.id){
@@ -771,6 +902,7 @@ void student_login(){
     scanf("%s",&password);
     int found = 0;
     FILE *openfile;
+    openfile = fopen("Student Password.txt","a");
     openfile = fopen("Student Password.txt","r");
     while(fread(&pass,sizeof(pass),1,openfile) == 1){
         if(id==pass.id){
