@@ -27,6 +27,22 @@ struct student_waiver{
     float required_sgpa;
 } waiver;
 
+struct mark_entry{
+    int id;
+    char subject[100];
+    float average_quiz,quiz1,quiz2,quiz3;
+    float assignment;
+    float presentation;
+    float attendance;
+    float midterm;
+    float final;
+    float total;
+    float grade_point;
+    float lab_performance;
+    float lab_report;
+    float proposal;
+} theory,lab,project;
+
 float grade(float total){
     float grade_point;
 
@@ -64,39 +80,258 @@ float grade(float total){
 }
 
 void faculty_mark_entry_theory(){
+    for(int i=1;i<=1;i++){
+        printf("Enter 1no quiz mark (0-15) =");
+        scanf("%f",&theory.quiz1);
+        if(theory.quiz1<0 || theory.quiz1>15){
+            printf("Invalid Input. Try Again\n");
+            i--;
+            continue;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter 2no quiz mark (0-15) =");
+        scanf("%f",&theory.quiz2);
+        if(theory.quiz2<0 || theory.quiz2>15){
+            printf("Invalid Input. Try Again\n");
+            i--;
+            continue;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter 3no quiz mark (0-15) =");
+        scanf("%f",&theory.quiz3);
+        if(theory.quiz3<0 || theory.quiz3>15){
+            printf("Invalid Input. Try Again\n");
+            i--;
+            continue;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter presentation mark (0-8) =");
+        scanf("%f",&theory.presentation);
+        if(theory.presentation<0 || theory.presentation>8){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter assignment mark (0-5) =");
+        scanf("%f",&theory.assignment);
+        if(theory.assignment<0 || theory.assignment>5){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter mid mark (0-25) =");
+        scanf("%f",&theory.midterm);
+        if(theory.midterm<0 || theory.midterm>25){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter final mark (0-40) =");
+        scanf("%f",&theory.final);
+        if(theory.final<0 || theory.final>40){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter attendance mark (0-7) =");
+        scanf("%f",&theory.attendance);
+        if(theory.attendance<0 || theory.attendance>7){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
 
+    theory.average_quiz=(theory.quiz1+theory.quiz2+theory.quiz3)/3.0;
+    theory.total=theory.average_quiz+theory.presentation+theory.assignment+theory.midterm+theory.final+theory.attendance;
+
+    theory.grade_point=grade(theory.total);
+
+    return;
 }
 
 void faculty_mark_entry_lab(){
+    for(int i=1;i<=1;i++){
+        printf("Enter lab performance mark (0-20) =");
+        scanf("%f",&lab.lab_performance);
+        if(lab.lab_performance<0 || lab.lab_performance>20){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter assignment mark (0-5) =");
+        scanf("%f",&lab.assignment);
+        if(lab.assignment<0 || lab.assignment>5){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter lab report mark (0-25) =");
+        scanf("%f",&lab.lab_report);
+        if(lab.lab_report<0 || lab.lab_report>25){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter final mark (0-40) =");
+        scanf("%f",&lab.final);
+        if(lab.final<0 || lab.final>40){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter attendance mark (0-10) =");
+        scanf("%f",&lab.attendance);
+        if(lab.attendance<0 || lab.attendance>10){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
 
+    lab.total=lab.lab_performance+lab.assignment+lab.lab_report+lab.final+lab.attendance;
+
+    lab.grade_point=grade(lab.total);
+
+    return;
 }
 
 void faculty_mark_entry_project(){
+    for(int i=1;i<=1;i++){
+        printf("Enter proposal mark (0-20) =");
+        scanf("%f",&project.proposal);
+        if(project.proposal<0 || project.proposal>20){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter presentation mark (0-20) =");
+        scanf("%f",&project.presentation);
+        if(project.presentation<0 || project.presentation>20){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter final mark (0-40) =");
+        scanf("%f",&project.final);
+        if(project.final<0 || project.final>40){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+    for(int i=1;i<=1;i++){
+        printf("Enter attendance mark (0-10) =");
+        scanf("%f",&project.attendance);
+        if(project.attendance<0 || project.attendance>10){
+            printf("Invalid Input. Try Again\n");
+            i--;
+        }
+    }
+
+    project.total=project.proposal+project.presentation+project.final+project.attendance;
+
+    project.grade_point=grade(project.total);
+
+    return;
+}
+
+void faculty_result(){
 
 }
 
-void faculty_result_theory(){
+void faculty_mark_entry(char subject[100]){
+            int id;
+            printf("\n\nEnter ID: ");
+            scanf("%d",&id);
+            int found = 0;
+            FILE *openfile;
+            openfile = fopen("Student Password.txt","r");
+            while(fread(&pass,sizeof(pass),1,openfile) == 1){
+                if(id==pass.id){
+                    found = 1;
+                    break;
+                }
+            }
+            fclose(openfile);
+            if(found == 1){
+                faculty_mark_entry_theory();
+                found = 0;
+                openfile = fopen("Student Result.txt","a");
+                openfile = fopen("Student Result.txt","r+");
+                while(fread(&theory, sizeof(theory),1,openfile) == 1){
+                    if(id==theory.id && strcmp(theory.subject,subject)==0){
+                        fseek(openfile,-sizeof(theory), SEEK_CUR);
+                        fwrite(&theory,sizeof(theory), 1, openfile);
+                        found = 1;
+                        break;
+                    }
+                }
+                if(!found){
+                    openfile = fopen("Student Result.txt","a+");
+                    theory.id=id;
+                    strcpy(theory.subject,subject);
+                    fwrite(&theory, sizeof(theory), 1, openfile);
+                }
+                fclose(openfile);
 
+                found = 0;
+                openfile = fopen(strcat(subject,".txt"),"a");
+                openfile = fopen(strcat(subject,".txt"),"r+");
+                while(fread(&theory, sizeof(theory),1,openfile) == 1){
+                    if(id==theory.id){
+                        fseek(openfile,-sizeof(theory), SEEK_CUR);
+                        fwrite(&theory,sizeof(theory), 1, openfile);
+                        found = 1;
+                        break;
+                    }
+                }
+                if(!found){
+                    openfile = fopen(strcat(subject,".txt"),"a+");
+                    theory.id=id;
+                    fwrite(&theory, sizeof(theory), 1, openfile);
+                }
+                fclose(openfile);
+                printf("Mark entry complete\n");
+            }
+            else{
+                printf("Student is not registered\n");
+            }
+            return;
 }
 
-void faculty_result_lab(){
-
-}
-
-void faculty_result_projet(){
-
-}
-
-void faculty_course_theory(){
-
-}
-
-void faculty_course_lab(){
-    
-}
-
-void faculty_course_project(){
-    
+void faculty_course_dasboard(char subject[100]){
+    while(1){
+        printf("1. Mark Entry\n");
+        printf("2. Result List\n");
+        printf("3. Back\n");
+        printf("\nSelect a option: ");
+        int option;
+        scanf("%d",&option);
+        if(option==1){
+            system("clear");
+            faculty_mark_entry(subject);
+            continue;
+        }
+        if(option==2){
+            system("clear");
+            faculty_result(subject);
+            continue;
+        }
+        if(option==3){
+            return;
+        }
+    }
 }
 
 void faculty_course(int id){
@@ -111,18 +346,19 @@ void faculty_course(int id){
             scanf("%d",&option);
             if(option==1){
                 system("clear");
-                faculty_course_theory();
+                char subject[]="Data Structure";
+                faculty_course_dasboard(subject);
                 continue;
             }
             if(option==2){
                 system("clear");
-                faculty_course_lab();
+                char subject[]="Data Structure Lab";
+                faculty_course_dasboard(subject);
                 continue;
             }
             if(option==3){
                 return;
             }
-            
         }
     }
     if(id==1002){
@@ -134,7 +370,8 @@ void faculty_course(int id){
             scanf("%d",&option);
             if(option==1){
                 system("clear");
-                faculty_course_project();
+                char subject[]="Software Devlopment Capston Project";
+                faculty_course_dasboard(subject);
                 continue;
             }
             if(option==2){
