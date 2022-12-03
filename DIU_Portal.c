@@ -847,6 +847,8 @@ void faculty_profile_update(int id)
             fflush(stdin);
             printf("Name: ");
             gets(faculty.name);
+            printf("Date of Birth: ");
+            gets(faculty.date_of_birth);
             printf("Designation: ");
             gets(faculty.designation);
             printf("Department: ");
@@ -878,6 +880,8 @@ void faculty_profile_update(int id)
         fflush(stdin);
         printf("Name: ");
         gets(faculty.name);
+        printf("Date of Birth: ");
+        gets(faculty.date_of_birth);
         printf("Designation: ");
         gets(faculty.designation);
         printf("Department: ");
@@ -924,6 +928,8 @@ void student_profile_update(int id)
             fflush(stdin);
             printf("Name: ");
             gets(student.name);
+            printf("Date of Birth: ");
+            gets(student.date_of_birth);
             printf("Father's Name: ");
             gets(student.father_name);
             printf("Mother's Name: ");
@@ -957,6 +963,8 @@ void student_profile_update(int id)
         fflush(stdin);
         printf("Name: ");
         gets(student.name);
+        printf("Date of Birth: ");
+        gets(student.date_of_birth);
         printf("Father's Name: ");
         gets(student.father_name);
         printf("Mother's Name: ");
@@ -1010,6 +1018,7 @@ void faculty_profile(int id)
     {
         printf("ID: %d\n", faculty.id);
         printf("Name: %s\n", faculty.name);
+        printf("Date of Birth: %s\n", faculty.date_of_birth);
         printf("Designation: %s\n", faculty.designation);
         printf("Department: %s\n", faculty.department);
         printf("E-mail: %s\n", faculty.email);
@@ -1054,6 +1063,7 @@ void student_profile(int id)
     {
         printf("ID: %d\n", student.id);
         printf("Name: %s\n", student.name);
+        printf("Date of Birth: %s\n", student.date_of_birth);
         printf("Father's Name: %s\n", student.father_name);
         printf("Mother's Name: %s\n", student.mother_name);
         printf("Department: %s\n", student.department);
