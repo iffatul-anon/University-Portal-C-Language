@@ -29,6 +29,7 @@ struct profile
 {
     int id;
     char name[50];
+    char date_of_birth[15];
     char father_name[50];
     char mother_name[50];
     char designation[50];
@@ -126,8 +127,6 @@ float grade(float total)
 
 void mark_entry_theory()
 {
-    system("clear");
-
     for (int i = 1; i <= 1; i++)
     {
         printf("Enter 1no quiz mark (0-15) =");
@@ -216,14 +215,11 @@ void mark_entry_theory()
     mark.total = mark.average_quiz + mark.presentation + mark.assignment + mark.midterm + mark.final + mark.attendance;
     mark.grade_point = grade(mark.total);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void mark_entry_lab()
 {
-    system("clear");
-
     for (int i = 1; i <= 1; i++)
     {
         printf("Enter lab performance mark (0-20) =");
@@ -278,14 +274,11 @@ void mark_entry_lab()
     mark.total = mark.lab_performance + mark.assignment + mark.lab_report + mark.final + mark.attendance;
     mark.grade_point = grade(mark.total);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void mark_entry_project()
 {
-    system("clear");
-
     for (int i = 1; i <= 1; i++)
     {
         printf("Enter proposal mark (0-20) =");
@@ -330,7 +323,6 @@ void mark_entry_project()
     mark.total = mark.proposal + mark.presentation + mark.final + mark.attendance;
     mark.grade_point = grade(mark.total);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
@@ -382,7 +374,7 @@ void faculty_result_list(char tlp, char subject[100])
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -444,7 +436,7 @@ void faculty_mark_entry(int id, char tlp, char subject[100])
 
     printf("\n\nMark entry complete\n");
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -465,8 +457,9 @@ void faculty_course_dasboard(char tlp, char subject[100])
         scanf("%d", &option);
         if (option == 1)
         {
+            system("clear");
             printf("\n\n|| Faculty Portal ||\n\n");
-            printf("\n\n|| Mark Entry (%s) ||\n\n\n", subject);
+            printf("|| Mark Entry (%s) ||\n\n\n", subject);
 
             int id;
             printf("Enter ID: ");
@@ -494,6 +487,7 @@ void faculty_course_dasboard(char tlp, char subject[100])
             else
             {
                 printf("\n\nStudent is not registered\n");
+                system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
             }
             continue;
         }
@@ -504,7 +498,6 @@ void faculty_course_dasboard(char tlp, char subject[100])
         }
         if (option == 3)
         {
-            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
     }
@@ -543,7 +536,6 @@ void faculty_course(int id)
             }
             if (option == 3)
             {
-                system("read -n 1 -s -p \"Press any key to continue...\"");
                 return;
             }
         }
@@ -571,7 +563,6 @@ void faculty_course(int id)
             }
             if (option == 2)
             {
-                system("read -n 1 -s -p \"Press any key to continue...\"");
                 return;
             }
         }
@@ -635,7 +626,7 @@ void student_payment_ledger(int id)
         printf("Payable: %.2fTk\n\n", total_fee);
     }
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -738,7 +729,7 @@ void student_result(int id)
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -785,7 +776,7 @@ void faculty_password_change(int id)
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -832,7 +823,7 @@ void student_password_change(int id)
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -909,7 +900,7 @@ void faculty_profile_update(int id)
 
     printf("\n\nProfile Updated Successfully");
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -990,7 +981,7 @@ void student_profile_update(int id)
 
     printf("\n\nProfile Updated Successfully");
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -1034,7 +1025,7 @@ void faculty_profile(int id)
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -1079,7 +1070,7 @@ void student_profile(int id)
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -1122,7 +1113,6 @@ void faculty_dasboard(int id)
         }
         if (option == 5)
         {
-            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
     }
@@ -1173,7 +1163,6 @@ void student_dasboard(int id)
         }
         if (option == 6)
         {
-            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
     }
@@ -1213,8 +1202,6 @@ void faculty_login()
         if (strcmp(password, pass.password) == 0)
         {
             faculty_dasboard(id);
-
-            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
         else
@@ -1229,7 +1216,7 @@ void faculty_login()
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -1268,8 +1255,6 @@ void student_login()
         if (strcmp(password, pass.password) == 0)
         {
             student_dasboard(id);
-
-            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
         else
@@ -1284,7 +1269,7 @@ void student_login()
 
     fclose(openfile);
 
-    system("read -n 1 -s -p \"Press any key to continue...\"");
+    system("read -n 1 -s -p \"\n\nPress any key to continue...\"");
     return;
 }
 
@@ -1314,6 +1299,8 @@ int main()
         }
         if (option == 3)
         {
+            system("clear");
+            printf("\n\nThank You\n\n\n");
             return 0;
         }
     }
