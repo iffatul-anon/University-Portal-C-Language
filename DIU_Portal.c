@@ -2,6 +2,29 @@
 #include <string.h>
 #include <stdlib.h>
 
+void faculty_login();
+void faculty_dasboard(int id);
+void faculty_profile(int id);
+void faculty_profile_update(int id);
+void faculty_profile_update(int id);
+void faculty_course(int id);
+void faculty_course_dasboard(char tlp, char subject[100]);
+void faculty_mark_entry(int id, char tlp, char subject[100]);
+void faculty_result_list(char tlp, char subject[100]);
+
+void student_login();
+void student_dasboard(int id);
+void student_profile(int id);
+void student_profile_update(int id);
+void student_password_change(int id);
+void student_result(int id);
+void student_payment_ledger(int id);
+
+void mark_entry_theory();
+void mark_entry_lab();
+void mark_entry_project();
+float grade(float total);
+
 struct profile
 {
     int id;
@@ -101,8 +124,10 @@ float grade(float total)
     return grade_point;
 }
 
-void faculty_mark_entry_theory()
+void mark_entry_theory()
 {
+    system("clear");
+
     for (int i = 1; i <= 1; i++)
     {
         printf("Enter 1no quiz mark (0-15) =");
@@ -191,11 +216,14 @@ void faculty_mark_entry_theory()
     mark.total = mark.average_quiz + mark.presentation + mark.assignment + mark.midterm + mark.final + mark.attendance;
     mark.grade_point = grade(mark.total);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
-void faculty_mark_entry_lab()
+void mark_entry_lab()
 {
+    system("clear");
+
     for (int i = 1; i <= 1; i++)
     {
         printf("Enter lab performance mark (0-20) =");
@@ -250,11 +278,14 @@ void faculty_mark_entry_lab()
     mark.total = mark.lab_performance + mark.assignment + mark.lab_report + mark.final + mark.attendance;
     mark.grade_point = grade(mark.total);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
-void faculty_mark_entry_project()
+void mark_entry_project()
 {
+    system("clear");
+
     for (int i = 1; i <= 1; i++)
     {
         printf("Enter proposal mark (0-20) =");
@@ -299,11 +330,14 @@ void faculty_mark_entry_project()
     mark.total = mark.proposal + mark.presentation + mark.final + mark.attendance;
     mark.grade_point = grade(mark.total);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void faculty_result_list(char tlp, char subject[100])
 {
+    system("clear");
+
     printf("\n\n|| Faculty Portal ||\n\n");
     printf("|| Result List (%s) ||\n\n\n", subject);
 
@@ -348,11 +382,14 @@ void faculty_result_list(char tlp, char subject[100])
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void faculty_mark_entry(int id, char tlp, char subject[100])
 {
+    system("clear");
+
     int found = 0;
     char file_name[100];
     strcpy(file_name, subject);
@@ -368,15 +405,15 @@ void faculty_mark_entry(int id, char tlp, char subject[100])
         {
             if (tlp == 't')
             {
-                faculty_mark_entry_theory();
+                mark_entry_theory();
             }
             else if (tlp == 'l')
             {
-                faculty_mark_entry_lab();
+                mark_entry_lab();
             }
             else if (tlp == 'p')
             {
-                faculty_mark_entry_project();
+                mark_entry_project();
             }
             fseek(openfile, -sizeof(mark), SEEK_CUR);
             fwrite(&mark, sizeof(mark), 1, openfile);
@@ -390,15 +427,15 @@ void faculty_mark_entry(int id, char tlp, char subject[100])
         mark.id = id;
         if (tlp == 't')
         {
-            faculty_mark_entry_theory();
+            mark_entry_theory();
         }
         else if (tlp == 'l')
         {
-            faculty_mark_entry_lab();
+            mark_entry_lab();
         }
         else if (tlp == 'p')
         {
-            faculty_mark_entry_project();
+            mark_entry_project();
         }
         fwrite(&mark, sizeof(mark), 1, openfile);
     }
@@ -407,6 +444,7 @@ void faculty_mark_entry(int id, char tlp, char subject[100])
 
     printf("\n\nMark entry complete\n");
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
@@ -414,6 +452,8 @@ void faculty_course_dasboard(char tlp, char subject[100])
 {
     while (1)
     {
+        system("clear");
+
         printf("\n\n|| Faculty Portal ||\n\n");
         printf("|| Course (%s) ||\n\n\n", subject);
         printf("1. Mark Entry\n");
@@ -425,7 +465,6 @@ void faculty_course_dasboard(char tlp, char subject[100])
         scanf("%d", &option);
         if (option == 1)
         {
-            system("clear");
             printf("\n\n|| Faculty Portal ||\n\n");
             printf("\n\n|| Mark Entry (%s) ||\n\n\n", subject);
 
@@ -460,12 +499,12 @@ void faculty_course_dasboard(char tlp, char subject[100])
         }
         if (option == 2)
         {
-            system("clear");
             faculty_result_list(tlp, subject);
             continue;
         }
         if (option == 3)
         {
+            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
     }
@@ -477,6 +516,8 @@ void faculty_course(int id)
     {
         while (1)
         {
+            system("clear");
+
             printf("\n\n|| Faculty Portal ||\n\n");
             printf("|| Course ||\n\n\n");
             printf("1. Data Structure\n");
@@ -488,7 +529,6 @@ void faculty_course(int id)
             scanf("%d", &option);
             if (option == 1)
             {
-                system("clear");
                 char tlp = 't';
                 char subject[] = "Data Structure";
                 faculty_course_dasboard(tlp, subject);
@@ -496,7 +536,6 @@ void faculty_course(int id)
             }
             if (option == 2)
             {
-                system("clear");
                 char tlp = 'l';
                 char subject[] = "Data Structure Lab";
                 faculty_course_dasboard(tlp, subject);
@@ -504,6 +543,7 @@ void faculty_course(int id)
             }
             if (option == 3)
             {
+                system("read -n 1 -s -p \"Press any key to continue...\"");
                 return;
             }
         }
@@ -512,6 +552,8 @@ void faculty_course(int id)
     {
         while (1)
         {
+            system("clear");
+
             printf("\n\n|| Faculty Portal ||\n\n");
             printf("|| Course ||\n\n\n");
             printf("1. Software Development Capstone Project\n");
@@ -522,7 +564,6 @@ void faculty_course(int id)
             scanf("%d", &option);
             if (option == 1)
             {
-                system("clear");
                 char tlp = 'p';
                 char subject[] = "Software Development Capstone Project";
                 faculty_course_dasboard(tlp, subject);
@@ -530,6 +571,7 @@ void faculty_course(int id)
             }
             if (option == 2)
             {
+                system("read -n 1 -s -p \"Press any key to continue...\"");
                 return;
             }
         }
@@ -538,6 +580,8 @@ void faculty_course(int id)
 
 void student_payment_ledger(int id)
 {
+    system("clear");
+
     printf("\n\n|| Student Portal ||\n\n");
     printf("|| Payment Ledger ||\n\n\n");
     printf("ID: %d\n\n", id);
@@ -591,11 +635,14 @@ void student_payment_ledger(int id)
         printf("Payable: %.2fTk\n\n", total_fee);
     }
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void student_result(int id)
 {
+    system("clear");
+
     printf("\n\n|| Student Portal ||\n\n");
     printf("|| Result ||\n\n\n");
     printf("ID: %d\n\n", id);
@@ -691,11 +738,14 @@ void student_result(int id)
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void faculty_password_change(int id)
 {
+    system("clear");
+
     printf("\n\n|| Faculty Portal ||\n\n");
     printf("|| Password Change ||\n\n\n");
 
@@ -735,11 +785,14 @@ void faculty_password_change(int id)
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void student_password_change(int id)
 {
+    system("clear");
+
     printf("\n\n|| Student Portal ||\n\n");
     printf("|| Password Change ||\n\n\n");
 
@@ -778,11 +831,15 @@ void student_password_change(int id)
     }
 
     fclose(openfile);
+
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void faculty_profile_update(int id)
 {
+    system("clear");
+
     printf("\n\n|| Faculty Portal ||\n\n");
     printf("|| Profile Update ||\n\n\n");
 
@@ -852,11 +909,14 @@ void faculty_profile_update(int id)
 
     printf("\n\nProfile Updated Successfully");
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void student_profile_update(int id)
 {
+    system("clear");
+
     printf("\n\n|| Student Portal ||\n\n");
     printf("|| Profile Update ||\n\n\n");
 
@@ -930,11 +990,14 @@ void student_profile_update(int id)
 
     printf("\n\nProfile Updated Successfully");
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void faculty_profile(int id)
 {
+    system("clear");
+
     printf("\n\n|| Faculty Portal ||\n\n");
     printf("|| Profile ||\n\n\n");
 
@@ -971,11 +1034,14 @@ void faculty_profile(int id)
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void student_profile(int id)
 {
+    system("clear");
+
     printf("\n\n|| Student Portal ||\n\n");
     printf("|| Profile ||\n\n\n");
 
@@ -1013,6 +1079,7 @@ void student_profile(int id)
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
@@ -1020,6 +1087,8 @@ void faculty_dasboard(int id)
 {
     while (1)
     {
+        system("clear");
+
         printf("\n\n|| Faculty Portal ||\n\n\n");
         printf("ID : %d\n\n", id);
         printf("1. Profile\n");
@@ -1033,30 +1102,27 @@ void faculty_dasboard(int id)
         scanf("%d", &option);
         if (option == 1)
         {
-            system("clear");
             faculty_profile(id);
             continue;
         }
         if (option == 2)
         {
-            system("clear");
             faculty_profile_update(id);
             continue;
         }
         if (option == 3)
         {
-            system("clear");
             faculty_password_change(id);
             continue;
         }
         if (option == 4)
         {
-            system("clear");
             faculty_course(id);
             continue;
         }
         if (option == 5)
         {
+            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
     }
@@ -1066,6 +1132,8 @@ void student_dasboard(int id)
 {
     while (1)
     {
+        system("clear");
+
         printf("\n\n|| Student Portal ||\n\n\n");
         printf("ID : %d\n\n", id);
         printf("1. Profile\n");
@@ -1080,36 +1148,32 @@ void student_dasboard(int id)
         scanf("%d", &option);
         if (option == 1)
         {
-            system("clear");
             student_profile(id);
             continue;
         }
         if (option == 2)
         {
-            system("clear");
             student_profile_update(id);
             continue;
         }
         if (option == 3)
         {
-            system("clear");
             student_password_change(id);
             continue;
         }
         if (option == 4)
         {
-            system("clear");
             student_result(id);
             continue;
         }
         if (option == 5)
         {
-            system("clear");
             student_payment_ledger(id);
             continue;
         }
         if (option == 6)
         {
+            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
     }
@@ -1117,6 +1181,8 @@ void student_dasboard(int id)
 
 void faculty_login()
 {
+    system("clear");
+
     int id;
     char password[20];
 
@@ -1146,8 +1212,9 @@ void faculty_login()
     {
         if (strcmp(password, pass.password) == 0)
         {
-            system("clear");
             faculty_dasboard(id);
+
+            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
         else
@@ -1162,11 +1229,15 @@ void faculty_login()
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
 void student_login()
 {
+
+    system("clear");
+
     int id;
     char password[20];
 
@@ -1196,8 +1267,9 @@ void student_login()
     {
         if (strcmp(password, pass.password) == 0)
         {
-            system("clear");
             student_dasboard(id);
+
+            system("read -n 1 -s -p \"Press any key to continue...\"");
             return;
         }
         else
@@ -1212,6 +1284,7 @@ void student_login()
 
     fclose(openfile);
 
+    system("read -n 1 -s -p \"Press any key to continue...\"");
     return;
 }
 
@@ -1219,6 +1292,8 @@ int main()
 {
     while (1)
     {
+        system("clear");
+
         printf("\n\n|| Welcome to DIU Portal ||\n\n\n");
         printf("   1. Faculty Login\n");
         printf("   2. Student Login\n");
@@ -1229,13 +1304,11 @@ int main()
         scanf("%d", &option);
         if (option == 1)
         {
-            system("clear");
             faculty_login();
             continue;
         }
         if (option == 2)
         {
-            system("clear");
             student_login();
             continue;
         }
