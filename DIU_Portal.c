@@ -654,6 +654,7 @@ void student_result(int id)
         {
             printf("%.2f | %.2f | %.2f | %.2f        | %.2f       | %.2f         | %.2f   | %.2f | %.2f       | %.2f | %.2f\n\n\n",
                    mark.quiz1, mark.quiz2, mark.quiz3, mark.average_quiz, mark.assignment, mark.presentation, mark.midterm, mark.final, mark.attendance, mark.total, mark.grade_point);
+
             sum_grade_point = sum_grade_point + (mark.grade_point * 3);
         }
     }
@@ -672,6 +673,7 @@ void student_result(int id)
         {
             printf("%.2f           | %.2f        | %.2f      | %.2f | %.2f       | %.2f | %.2f\n\n\n",
                    mark.lab_performance, mark.assignment, mark.lab_report, mark.final, mark.attendance, mark.total, mark.grade_point);
+
             sum_grade_point = sum_grade_point + (mark.grade_point * 1);
         }
     }
@@ -690,6 +692,7 @@ void student_result(int id)
         {
             printf("%.2f    | %.2f        | %.2f | %.2f       | %.2f | %.2f\n\n\n",
                    mark.proposal, mark.presentation, mark.final, mark.attendance, mark.total, mark.grade_point);
+
             sum_grade_point = sum_grade_point + (mark.grade_point * 3);
         }
     }
@@ -1315,3 +1318,31 @@ int main()
         }
     }
 }
+
+/*
+
+Md. Iffatul Islam Anon
+ID: 221-35-1065
+Email: anon35-1065@diu.edu.bd
+
+*/
+
+/*
+used functions:
+
+strcpy();
+strcmp();
+strcat();
+
+fflush();
+
+system("clear");
+system("read");
+
+fopen();
+fclose();
+fwrite();
+fread();
+fseek();
+
+*/
