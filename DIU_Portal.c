@@ -6,7 +6,7 @@ void faculty_login();
 void faculty_dasboard(int id);
 void faculty_profile(int id);
 void faculty_profile_update(int id);
-void faculty_profile_update(int id);
+void faculty_password_change(int id);
 void faculty_course(int id);
 void faculty_course_dasboard(char tlp, char subject[100]);
 void faculty_mark_entry(int id, char tlp, char subject[100]);
@@ -1324,11 +1324,15 @@ int main()
 Md. Iffatul Islam Anon
 ID: 221-35-1065
 Email: anon35-1065@diu.edu.bd
+Email: iffatulislamanon@gmail.com
+GitHub: iffatul-anon
 
 */
 
 /*
 used functions:
+
+sizeof();
 
 strcpy();
 strcmp();
@@ -1336,8 +1340,10 @@ strcat();
 
 fflush();
 
-system("clear");
-system("read");
+system("clear"); // for mac or linux
+system("cls"); // for windows
+system("read"); // for mac or linux
+system(“pause”); // for windows
 
 fopen();
 fclose();
